@@ -15,7 +15,8 @@ module PrawnHtml
       def before_content
         return if @before_content_once
 
-        @before_content_once = @counter ? "#{@counter}. " : "#{@symbol} "
+        # Ensure no line breaks between bullet and content by using a non-breaking space
+        @before_content_once = @counter ? "#{@counter}.\u00A0" : "#{@symbol}\u00A0"
       end
 
       def block_styles
