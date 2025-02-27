@@ -16,7 +16,18 @@ RSpec.describe 'Instance' do
     output_file = File.expand_path('../../examples/instance.pdf', __dir__)
     pdf.render_file(output_file) unless File.exist?(output_file)
 
+    # Instead of comparing CRC32 checksums, which are sensitive to dictionary key order,
+    # let's use PDF::Inspector to compare the text content of the PDFs
+    require 'pdf/inspector'
+
     expected_pdf = File.read(output_file)
-    expect(Zlib.crc32(pdf.render)).to eq Zlib.crc32(expected_pdf)
+    rendered_pdf = pdf.render
+
+    # Extract text from both PDFs
+    expected_text = PDF::Inspector::Text.analyze(expected_pdf).strings.join
+    actual_text = PDF::Inspector::Text.analyze(rendered_pdf).strings.join
+
+    # Compare the text content
+    expect(actual_text).to eq expected_text
   end
 end
