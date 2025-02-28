@@ -6,7 +6,10 @@ module PrawnHtml
       ELEMENTS = [:code].freeze
 
       def tag_styles
-        'font-family: Courier'
+        # Use a monospace style but don't force Courier font
+        # This allows the code tag to inherit the font from the parent context
+        # which should be 'noto-serif' that supports Japanese characters
+        'white-space: pre'
       end
     end
   end

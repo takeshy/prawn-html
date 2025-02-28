@@ -14,7 +14,6 @@ module PrawnHtml
 
       def tag_styles
         <<~STYLES
-          font-family: Courier;
           margin-bottom: #{MARGIN_BOTTOM}px;
           margin-top: #{MARGIN_TOP}px;
           white-space: pre;
